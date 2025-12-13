@@ -33,7 +33,7 @@ class SendMail extends Mailable{
      * @return $this
      */
     public function build() {
-        return $this->subject( $this->details['subject'] )->view( 'mail_address_confirmation_message' )->with( [
+        return $this->subject( $this->details['subject'] )->view( 'mail_address_confirmation' )->with( [
             'url'      => $this->details['url'],
         ] );
     }
