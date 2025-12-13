@@ -1,0 +1,84 @@
+name: Security Check
+
+on:
+  schedule:
+    - cron: '0 6 * * *'  # Daily at 6 AM UTC
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - 'composer.json'
+      - 'composer.lock'
+
+jobs:
+  security-audit:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          extensions: mbstring, xml, ctype, iconv, intl
+          
+      - name: Install dependencies
+        run: composer install --no-interaction --prefer-dist --optimize-autoloader
+        
+      - name: Run Composer Audit
+        run: composer audit --format=json > audit-results.json || true
+        
+      - name: Check for vulnerabilities
+        run: |
+          if [ -s audit-results.json ] && [ "$(jq '.advisories | length' audit-results.json)" -gt 0 ]; then
+            echo "🚨 Security vulnerabilities found!"
+            jq '.advisories' audit-results.json
+            echo "vulnerability-found=true" >> $GITHUB_ENV
+          else
+            echo "✅ No security vulnerabilities found"
+            echo "vulnerability-found=false" >> $GITHUB_ENV
+          fi
+          
+      - name: Create Security Issue
+        if: env.vulnerability-found == 'true'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const auditResults = JSON.parse(fs.readFileSync('audit-results.json', 'utf8'));
+            
+            let issueBody = '## 🚨 Security Vulnerabilities Detected\n\n';
+            issueBody += 'The following security vulnerabilities were found in dependencies:\n\n';
+            
+            for (const [package, advisories] of Object.entries(auditResults.advisories)) {
+              issueBody += `### ${package}\n`;
+              for (const advisory of advisories) {
+                issueBody += `- **${advisory.title}**\n`;
+                issueBody += `  - Severity: ${advisory.severity}\n`;
+                issueBody += `  - CVE: ${advisory.cve || 'N/A'}\n`;
+                issueBody += `  - Link: ${advisory.link}\n\n`;
+              }
+            }
+            
+            issueBody += '### Action Required\n';
+            issueBody += '1. Review the vulnerabilities above\n';
+            issueBody += '2. Update affected packages\n';
+            issueBody += '3. Test the application\n';
+            issueBody += '4. Deploy the fixes\n\n';
+            issueBody += `**Auto-generated on:** ${new Date().toISOString()}`;
+            
+            github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: '🚨 Security Vulnerabilities Detected',
+              body: issueBody,
+              labels: ['security', 'urgent', 'dependencies']
+            });
+            
+      - name: Upload audit results
+        if: env.vulnerability-found == 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: security-audit-results
+          path: audit-results.json

@@ -1,0 +1,24 @@
+{
+    "name": "package/laravel",
+    "version": "dev-main",
+    "description": "Project Laravel 12",
+    "license": "MIT",
+    "type": "project",
+    "authors": "maiteka-gr",
+    "require": {
+        "php": "^8.2",
+        "laravel/framework": "^12.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Laravel\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Laravel\\LaravelServicesProvider"
+            ]
+        }
+    }
+}
