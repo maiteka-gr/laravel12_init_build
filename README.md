@@ -1,5 +1,7 @@
 # Laravel Package Structure Documentation
 
+<a href="https://buymeacoffee.com/khaitkdev" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-orange.png" alt="Buy Me A Coffee" height="41" width="174"></a>
+
 ## Overview
 This document describes the organization and functionality of the custom Laravel package located in `packages/laravel/src/`.
 
