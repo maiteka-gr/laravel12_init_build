@@ -68,7 +68,7 @@ jobs:
       - name: Create Rollback Pull Request
         uses: peter-evans/create-pull-request@v5
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: echo ${{ vars.GITHUBTOKEN }}
           commit-message: 'fix: rollback Laravel to stable version'
           title: '🔄 Emergency: Laravel Rollback'
           body: |
