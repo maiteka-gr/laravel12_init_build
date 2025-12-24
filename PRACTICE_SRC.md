@@ -1,6 +1,6 @@
 # Build SRC
 
-**Author:** maiteka-gr  
+**Author:** vanmaikhai  
 **Created:** 2024-02-25  
 **Last Updated:** 2025-12-12
 
@@ -9,7 +9,7 @@
 1. Clone SRC
 
 ```
-git clone https://github.com/maiteka-gr/laravel12_init_build.git
+git clone https://github.com/vanmaikhai/laravel12_init_build.git
 cd laravel12_init_build
 ```
 

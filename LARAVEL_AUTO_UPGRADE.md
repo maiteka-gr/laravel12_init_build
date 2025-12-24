@@ -71,7 +71,7 @@ This document outlines the automated Laravel version upgrade process for the pro
 
 ## Contact Information
 
-**Author:** maiteka-gr  
+**Author:** vanmaikhai  
 **Created:** 2024-02-25  
 **Last Updated:** 2025-12-12
 

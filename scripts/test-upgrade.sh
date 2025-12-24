@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Laravel Upgrade Test Script
-# Author: maiteka-gr
+# Author: vanmaikhai
 # Date: 2024-02-25
 
 set -e

@@ -1,6 +1,6 @@
 # GitHub Actions Setup
 
-**Author:** maiteka-gr  
+**Author:** vanmaikhai  
 **Created:** 2024-02-25  
 **Last Updated:** 2025-12-12
 

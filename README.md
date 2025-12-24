@@ -5,7 +5,7 @@
 ## Overview
 This document describes the organization and functionality of the custom Laravel package located in `packages/laravel/src/`.
 
-**Author:** maiteka-gr  
+**Author:** vanmaikhai  
 **Created:** 2024-02-25  
 **Last Updated:** 2025-12-12
 
