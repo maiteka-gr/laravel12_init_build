@@ -48,7 +48,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
         with:
-          token: echo ${{ vars.GITHUBTOKEN }}
+          token: ${{ secrets.GITHUB_TOKEN }}
           
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
@@ -100,7 +100,7 @@ jobs:
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v5
         with:
-          token: echo ${{ vars.GITHUBTOKEN }}
+          token: ${{ secrets.GITHUB_TOKEN }}
           commit-message: 'chore: auto-upgrade Laravel framework'
           title: '🚀 Auto: Laravel Framework Update'
           body: |
